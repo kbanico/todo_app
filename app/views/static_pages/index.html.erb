@@ -4,7 +4,22 @@
     </header>
 
     <section class="main">
+      <ul class="todo-list">
+
+      </ul>
 
     </section>
 
 </section>
+
+<script>
+  $(function(){
+    $.get("/tasks").success(function(data){
+      data.forEach(function(element){
+        console.log(element.title)
+        $(".todo-list").append("<li>"+element.title+"</li>")
+      })
+
+    })
+  });
+</script>
