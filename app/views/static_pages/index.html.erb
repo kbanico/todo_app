@@ -17,18 +17,7 @@
 
 <script>
   $(function(){
-    $("#new-form").submit(function(event){
-      event.preventDefault();
-      var textbox = $(".new-todo");
-      var payload = {
-        task: {
-          title: textbox.val()
-        }
-      };
-      $.post("/tasks",payload).success(function(data){
-        console.log("Successfull HTTP Request");
-      });
-    });
+
 
 
 
@@ -77,7 +66,24 @@
 
      var ulTodos = $(".todo-list").html(htmlString);
 
-     $(".toggle").on("change",toggleTask);
+     $(".toggle").change(toggleTask);
+    });
+
+
+    $("#new-form").submit(function(event){
+      event.preventDefault();
+      var textbox = $(".new-todo");
+      var payload = {
+        task: {
+          title: textbox.val()
+        }
+      };
+      $.post("/tasks",payload).success(function(data){
+        var htmlString = taskHTML(data)
+        var ulTodos = $(".todo-list");
+        ulTodos.append(htmlString);
+        $(".toggle").click(toggleTask)
+      });
     });
 
 
