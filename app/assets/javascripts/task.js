@@ -2,6 +2,9 @@
     // The taskHtml method takes in a JavaScript representation
     // of the task and produces an HTML representation using
     // <li> tags
+
+
+
     function taskHtml(task) {
       var checkedStatus = task.done ? "checked" : "";
       var liClass= task.done ? "completed" : "";
@@ -11,10 +14,14 @@
         checkedStatus +
         '><label>' +
          task.title +
-         '</label></div></li>';
+         '</label><i id="'+ task.id+'" onclick="deleteMe(this)" class="fa fa-trash-o pull-right" aria-hidden="true"></i></div></li>';
 
       return liElement;
     }
+
+
+
+
 
     // toggleTask takes in an HTML representation of the
     // an event that fires from an HTML representation of
@@ -69,5 +76,34 @@
       });
     });
 
+
+
+
+
   });
+
+   function deleteMe(e){
+
+    $.ajax({
+      type: "DELETE",
+      url: "/tasks/"+e.id,
+      dataType: "json",
+      success: function(response){
+        console.log("sucessfully deleted");
+        e.parentNode.remove()
+      },
+      error: function(){
+        console.log("error")
+
+
+      }
+    })
+    e.preventDefault
+
+  }
+
+
+
+
+
 
